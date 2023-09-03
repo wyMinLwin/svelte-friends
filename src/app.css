@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.form-container-border {
+    border: 1px solid #919191;
+}
+
+.click-effect:active {
+    transition: all 0.4ms linear;
+    transform: translateY(2px);
+    transform: scale(0.98);
+}
+
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.barlow {
+    font-family: 'Barlow Condensed', sans-serif;
+}
