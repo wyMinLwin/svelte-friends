@@ -13,6 +13,12 @@
     transform: scale(0.98);
 }
 
+.box-shadow {
+    box-shadow: 0 11px 34px 0 rgba(0,0,0,.2);
+    -webkit-box-shadow: 0 11px 34px 0 rgba(0,0,0,.2);
+    -moz-box-shadow: 0 11px 34px 0 rgba(0,0,0,.2);
+}
+
 * {
     font-family: 'Montserrat', sans-serif;
 }
