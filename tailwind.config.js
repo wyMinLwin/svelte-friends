@@ -20,6 +20,10 @@ export default {
           "shade-2":"#ED5565",
           "shade-3":"#DA4453"
         },
+        "green": {
+          "shade-1":"#def7ec",
+          "shade-2":"#217c5f"
+        }
       }
     },
   },

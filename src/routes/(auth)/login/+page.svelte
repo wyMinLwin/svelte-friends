@@ -4,6 +4,7 @@
     import googleLogo from "$lib/images/google.png"
     import { tick } from "svelte";
     import { goto } from "$app/navigation";
+    import AlertBox from "$lib/components/AlertBox.svelte";
     let emailOrUsername = "";
     let password = "";
     let passwordInput:HTMLInputElement;
@@ -32,9 +33,7 @@
     <div class="font-semibold text-2xl text-black barlow">Be With Friends</div>
 
     {#if loginError}
-        <div transition:fade={{duration:200}} class="w-full px-3 py-2 bg-red-shade-1 text-red-shade-3 rounded-md text-center">
-            {loginError}
-        </div>
+        <AlertBox text={loginError} bg={"bg-red-shade-1"} color="text-red-shade-3" />
     {/if}
 
     <input on:keypress={() => loginError = ''} type="text" bind:value={emailOrUsername} class="bg-white-shade-2 form-container-border w-full px-3 py-2 rounded-md focus:outline-gray-shade-1" placeholder="Email or username" />
