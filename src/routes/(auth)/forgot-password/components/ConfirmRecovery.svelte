@@ -10,24 +10,15 @@
     let gonnaAutoVerify = true;
     
     let confirmRecoveryRef:HTMLInputElement;
-    let input1Ref:HTMLInputElement;
-    let input2Ref:HTMLInputElement;
-    let input3Ref:HTMLInputElement;
-    let input4Ref:HTMLInputElement;
-    let input5Ref:HTMLInputElement;
-    let input6Ref:HTMLInputElement;
-
+    let inputRefArray:Array<HTMLInputElement|undefined> = [undefined,undefined,undefined,undefined,undefined,undefined];
+    
     const getOtpCode = () => {
         gonnaAutoVerify = true;
         inputNumberArray = [null,null,null,null,null,null];
         optSent = true;
-        input1Ref.focus();
+        inputRefArray[0]?.focus();
     }
-
-    const jumpInput = () => {
-
-    }
-
+    
     onMount(() => {
         confirmRecoveryRef.focus();
     });
@@ -35,6 +26,8 @@
     $: {
         if ((inputNumberArray.lastIndexOf(null) !== -1) && inputNumberArray.findLastIndex(n => typeof n === 'number') > inputNumberArray.findIndex(n => n === null)) {
             gonnaAutoVerify = false;
+        } else {
+            inputRefArray[inputNumberArray.findIndex(n => n === null)]?.focus()
         }
     }
     $: inputNumberArray = inputNumberArray.map(number => {
@@ -63,12 +56,12 @@
     {#if optSent}
         <div class="w-full flex flex-col gap-3" in:fly={{ y:-5,duration:500}}>
             <div class="w-full grid grid-cols-6 gap-2">
-                <input on:keyup={(e) => !!Number(e.key) && gonnaAutoVerify && input2Ref.focus()} bind:this={input1Ref} type="number" bind:value={inputNumberArray[0]} max="9" min="0" step="1" class="h-14 bg-white-shade-2 form-container-border rounded-md text-center text-2xl">
-                <input on:keyup={(e) => !!Number(e.key) && gonnaAutoVerify && input3Ref.focus()} bind:this={input2Ref} type="number" bind:value={inputNumberArray[1]} max="9" min="0" step="1" class="h-14 bg-white-shade-2 form-container-border rounded-md text-center text-2xl">
-                <input on:keyup={(e) => !!Number(e.key) && gonnaAutoVerify && input4Ref.focus()} bind:this={input3Ref} type="number" bind:value={inputNumberArray[2]} max="9" min="0" step="1" class="h-14 bg-white-shade-2 form-container-border rounded-md text-center text-2xl">
-                <input on:keyup={(e) => !!Number(e.key) && gonnaAutoVerify && input5Ref.focus()} bind:this={input4Ref} type="number" bind:value={inputNumberArray[3]} max="9" min="0" step="1" class="h-14 bg-white-shade-2 form-container-border rounded-md text-center text-2xl">
-                <input on:keyup={(e) => !!Number(e.key) && gonnaAutoVerify && input6Ref.focus()} bind:this={input5Ref} type="number" bind:value={inputNumberArray[4]} max="9" min="0" step="1" class="h-14 bg-white-shade-2 form-container-border rounded-md text-center text-2xl">
-                <input on:keyup={(e) => !!Number(e.key) && gonnaAutoVerify && dispatch('confirmRecovery')} bind:this={input6Ref} type="number" bind:value={inputNumberArray[5]} max="9" min="0" step="1" class="h-14 bg-white-shade-2 form-container-border rounded-md text-center text-2xl">
+                <input bind:this={inputRefArray[0]} type="number" bind:value={inputNumberArray[0]} max="9" min="0" step="1" class="h-14 bg-white-shade-2 form-container-border rounded-md text-center text-2xl">
+                <input bind:this={inputRefArray[1]} type="number" bind:value={inputNumberArray[1]} max="9" min="0" step="1" class="h-14 bg-white-shade-2 form-container-border rounded-md text-center text-2xl">
+                <input bind:this={inputRefArray[2]} type="number" bind:value={inputNumberArray[2]} max="9" min="0" step="1" class="h-14 bg-white-shade-2 form-container-border rounded-md text-center text-2xl">
+                <input bind:this={inputRefArray[3]} type="number" bind:value={inputNumberArray[3]} max="9" min="0" step="1" class="h-14 bg-white-shade-2 form-container-border rounded-md text-center text-2xl">
+                <input bind:this={inputRefArray[4]} type="number" bind:value={inputNumberArray[4]} max="9" min="0" step="1" class="h-14 bg-white-shade-2 form-container-border rounded-md text-center text-2xl">
+                <input on:keyup={(e) => !!Number(e.key) && gonnaAutoVerify && dispatch('confirmRecovery')} bind:this={inputRefArray[5]} type="number" bind:value={inputNumberArray[5]} max="9" min="0" step="1" class="h-14 bg-white-shade-2 form-container-border rounded-md text-center text-2xl">
             </div>
             <button on:click={() => dispatch('confirmRecovery')} class="click-effect w-full px-3 py-2 text-white-shade-2 bg-sky-shade-1 rounded-md">Verify</button>
         </div>
