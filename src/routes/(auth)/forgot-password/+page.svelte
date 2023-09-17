@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { fly } from "svelte/transition";
     import ConfirmRecovery from "./components/ConfirmRecovery.svelte";
     import RequestResetPassword from "./components/RequestResetPassword.svelte";
     import ResetPassword from "./components/ResetPassword.svelte";
@@ -24,14 +25,30 @@
     }
 </script>
 
-{#if requestResetPasswordDialog}
-    <RequestResetPassword bind:emailOrUsername on:requestResetPassword={() => requestResetPassword()} />
-{/if}
+<div class="relative">
+    {#if requestResetPasswordDialog}
+        <div out:fly={{x:-200,duration:320}} class="box-container">
+            <RequestResetPassword bind:emailOrUsername on:requestResetPassword={() => requestResetPassword()} />
+        </div>
+    {/if}
+    {#if confirmRecoveryDialog}
+        <div in:fly={{x:200,duration:320}} out:fly={{x:-200,duration:320}} class="box-container">
+            <ConfirmRecovery bind:recoveryInput on:confirmRecovery={() => confirmRecovery()} recoveryData={recoveryData} /> 
+        </div>
+    {/if}
+    {#if resetPasswordDialog}
+        <div in:fly={{x:200,duration:320}} class="box-container">
+            <ResetPassword />
+        </div>
+    {/if}
+</div>
 
-{#if confirmRecoveryDialog}
-   <ConfirmRecovery bind:recoveryInput on:confirmRecovery={() => confirmRecovery()} recoveryData={recoveryData} /> 
-{/if}
-
-{#if resetPasswordDialog}
-    <ResetPassword />
-{/if}
+<style>
+    .box-container {
+        width: 100%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    }
+</style>
