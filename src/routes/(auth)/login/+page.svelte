@@ -5,6 +5,7 @@
     import { tick } from "svelte";
     import { goto } from "$app/navigation";
     import AlertBox from "$lib/components/AlertBox.svelte";
+    import { GetRequest, PostRequest } from "$lib/services/apiCaller";
     let emailOrUsername = "";
     let password = "";
     let passwordInput:HTMLInputElement;
@@ -19,10 +20,17 @@
             return;
         }
         if (passwordBox && password) {
-            if (emailOrUsername === 'superadmin' && password === "password" ) {
-                goto('/');
+            const res = await PostRequest({path:'login',data:{email:emailOrUsername,password}});
+            if (res !== undefined) {
+                if (!res.success) {
+                    loginError = res.message
+                } else {
+                    goto('/')
+                }
+                return;
+
             }
-            loginError = "Username or Password wrong.";
+            loginError = "Something was wrong. Please Try Again."
         }
     }
 
